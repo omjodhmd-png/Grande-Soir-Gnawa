@@ -1,5 +1,5 @@
 // controllers/bookingController.js
-import Booking from "../models/booking.js";
+import Booking from "../models/bookings.js";
 import QRCode from "qrcode";
 
 // Create new booking

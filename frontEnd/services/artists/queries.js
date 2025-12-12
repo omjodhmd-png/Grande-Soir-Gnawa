@@ -13,3 +13,13 @@ export  function useGetArtists(){
       
     })
 }
+export  function useGetArtist(id){
+   return useQuery({
+      queryKey:["artist"],
+      queryFn:()=> instance.get("/artists/"+id).then(res=>res.data).catch(error=>{
+        console.log(error);
+        throw new Error(error.message)
+    })
+      
+    })
+}

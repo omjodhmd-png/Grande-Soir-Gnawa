@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useGetArtists } from "../services/artists/queries";
+import { router } from "expo-router";
 
 const { width, height } = Dimensions.get("window");
 
@@ -19,11 +20,10 @@ export default function ArtistScreen() {
 
 
     const { data, isLoading, error } = useGetArtists()
-
     if (isLoading)
       return (
   
-        <View >
+        <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
           <Text>Loading...</Text>
         </View>)
     if (error)
@@ -40,20 +40,19 @@ export default function ArtistScreen() {
 
       {/* HEADER */}
       <View style={styles.header}>
+      <TouchableOpacity style={{padding:10}} onPress={()=>router.back("./index")}>
         <Ionicons name="arrow-back" size={26} color="white" />
+        </TouchableOpacity>        
         <Text style={styles.headerTitle}>Artist Gnawa</Text>
-        <View style={{ width: 30 }} /> 
+        <TouchableOpacity style={{padding:10}} onPress={()=>router.push("./ticket")}>
+        <Ionicons name="ticket" size={26} color="white" />
+        </TouchableOpacity>
+        
+
+
       </View>
 
-      {/* SEARCH BAR */}
-      <View style={styles.searchBox}>
-        <Ionicons name="search" size={20} color="#bbb" style={{ marginLeft: 10 }} />
-        <TextInput
-          placeholder="Rechercher un Artist....."
-          placeholderTextColor="#ccc"
-          style={styles.searchInput}
-        />
-      </View>
+     
 
       {/* ARTIST LIST */}
       <FlatList
@@ -61,8 +60,14 @@ export default function ArtistScreen() {
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ paddingBottom: 20 }}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.card}>
-            <Image source={item.image_url} style={styles.avatar} />
+          <TouchableOpacity style={styles.card} 
+             onPress={() =>router.push({
+              pathname: "/artists/[id]",
+              params: { id: item.id },
+            })}>
+            <View >
+            <Image source={{uri: item.image_url}} style={styles.avatar} />
+            </View>
             <View>
               <Text style={styles.artistName}>{item.name}</Text>
               <Text style={styles.artistDesc}>{item.speciality}</Text>

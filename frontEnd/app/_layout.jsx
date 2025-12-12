@@ -14,6 +14,12 @@ export default function MainTabsLayout() {
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }}/>
         <Stack.Screen name="home" options={{ headerShown: false }}/>
+        <Stack.Screen name="ticket" options={{ headerShown: false }}/>
+        <Stack.Screen name="artists/[id]" options={{ headerShown: false }}/>
+        <Stack.Screen name="resirvation" options={{ headerShown: false }}/>
+
+
+
 
       </Stack>
     </QueryClientProvider>)

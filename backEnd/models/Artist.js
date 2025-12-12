@@ -24,7 +24,15 @@ const Artist = sequelize.define("Artist", {
     performance_time:{
         type:DataTypes.STRING,
         allowNull:false
-    }
+    },
+    price_vip:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+    },
+    price_standard:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+    },
 
 });
 export default Artist;
