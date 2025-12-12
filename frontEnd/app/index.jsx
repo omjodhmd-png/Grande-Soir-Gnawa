@@ -1,10 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
 import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGetEvents } from "../services/events/queries";
 import { useFonts } from "expo-font";
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 
 const { width, height } = Dimensions.get("window");
 
@@ -15,7 +15,6 @@ const { width, height } = Dimensions.get("window");
 export default function Eventinfo() {
   const [fontsLoaded] = useFonts({
     "CarterOne": require("../assets/images/fonts/CarterOne-Regular.ttf")
-
   });
 
   const { data, isLoading, error } = useGetEvents()
@@ -62,7 +61,7 @@ export default function Eventinfo() {
           <Text style={styles.description}>{data?.description}</Text>
         </View>
         <View style={styles.button}>
-          <TouchableOpacity style={styles.toutch}>
+          <TouchableOpacity style={styles.toutch} onPress={()=>router.push("./home")}>
             <Text style={styles.textbutton}>Voir les artistes</Text>
           </TouchableOpacity>
         </View>

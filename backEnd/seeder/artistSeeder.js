@@ -28,7 +28,7 @@ const artistsData = [
     name: "Maâlem Aziz Alilou",
     speciality: "Hypnotic Gnawa",
     bio: "Known for his mesmerizing guembri performances.",
-    image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjeKxKPk0XoHs4yMNmAXk3Iu1dY2mEo5wONA&s",
+    image_url: "https://www.festival-gnaoua.net/wp-content/uploads/2025/05/Maalem-Omar-hayat.jpg",
     performance_time: "22:00",
   },
   {
