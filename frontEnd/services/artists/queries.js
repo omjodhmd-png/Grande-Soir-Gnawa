@@ -13,6 +13,7 @@ export  function useGetArtists(){
       
     })
 }
+
 export  function useGetArtist(id){
    return useQuery({
       queryKey:["artist"],

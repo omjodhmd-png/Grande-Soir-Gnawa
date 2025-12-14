@@ -7,35 +7,53 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-import usecreatbooking from "../services/booking/queries.js"
+import { router, useLocalSearchParams } from "expo-router";
+
+import { useCreatbooking } from "../services/booking/mutations.js"
+import { useTicketStore } from "../store/useTicketStore.js";
 
 export default function ReservationScreen() {
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [type, setType] = useState(null);
+  const { id } = useLocalSearchParams();
 
-  const createBooking = usecreatbooking();
+
+
+  const addTicket = useTicketStore((state) => state.addTicket);
+  const createBooking = useCreatbooking();
 
   const handleReservation = () => {
     if (!name || !email || !type) {
       Alert.alert("Erreur", "Veuillez remplir tous les champs.");
       return;
     }
-
     createBooking.mutate(
-      { name, email, type },
+      { name, email, type, artistId: id },
       {
         onSuccess: (data) => {
+          console.log("BOOKING FROM API 👉", data);
+
+          addTicket({
+            type,
+            number: data.booking.code,
+            date: data.booking.date || "10/01/2025",
+            qr: data.booking.qr,
+
+          });
+
           Alert.alert(
             "Succès ",
             `Réservation créée avec succès\n\nCode: ${data.booking.code}`
           );
+          router.push("/myticket");
           setName("");
           setEmail("");
           setType(null);
-          setSelectedArtist(null);
         },
         onError: (err) => {
+          console.log("ERROR 👉", err);
           Alert.alert("Erreur", err.message || "Erreur serveur");
         },
       }
@@ -46,7 +64,7 @@ export default function ReservationScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Créer une Réservation</Text>
 
-      {/* NAME */}
+   
       <TextInput
         placeholder="Nom complet"
         placeholderTextColor="#aaa"
@@ -55,7 +73,7 @@ export default function ReservationScreen() {
         onChangeText={setName}
       />
 
-      {/* EMAIL */}
+   
       <TextInput
         placeholder="Email"
         placeholderTextColor="#aaa"
@@ -65,7 +83,7 @@ export default function ReservationScreen() {
         keyboardType="email-address"
       />
 
-      {/* TYPE */}
+   
       <Text style={styles.label}>Type de billet :</Text>
 
       <View style={styles.typeContainer}>
@@ -78,13 +96,13 @@ export default function ReservationScreen() {
 
         <TouchableOpacity
           style={[styles.typeBtn, type === "STANDARD" && styles.selected]}
-          onPress={() => setType("STANDARD")}
+          onPress={() =>
+            setType("STANDARD")
+          }
         >
           <Text style={styles.typeText}>Standard</Text>
         </TouchableOpacity>
       </View>
-
-      {/* SUBMIT */}
       <TouchableOpacity
         style={styles.submitBtn}
         onPress={handleReservation}
@@ -94,6 +112,8 @@ export default function ReservationScreen() {
           {createBooking.isPending ? "Envoi..." : "Confirmer"}
         </Text>
       </TouchableOpacity>
+
+
     </View>
   );
 }

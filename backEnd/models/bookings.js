@@ -1,4 +1,3 @@
-// models/Booking.js
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
 
@@ -23,6 +22,11 @@ const Booking = sequelize.define("Booking", {
 
   qr: {
     type: DataTypes.TEXT,   
+    allowNull: false
+  },
+  
+  artistId: {
+    type: DataTypes.INTEGER,
     allowNull: false
   }
 });

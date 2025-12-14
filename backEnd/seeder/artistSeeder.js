@@ -1,4 +1,3 @@
-// seeders/artistSeeder.js
 import sequelize from "../config/db.js";
 import Artist from "../models/Artist.js";
 
@@ -12,6 +11,7 @@ const artistsData = [
     price_vip: 300,
     price_standard: 150,
   },
+  
   {
     name: "Hassan Hakmoun",
     speciality: "Gnawa Fusion",
@@ -80,7 +80,7 @@ const artistsData = [
 
 const seedArtists = async () => {
   try {
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ alter: true });
     await Artist.bulkCreate(artistsData);
     console.log(" 8 Moroccan Gnawa artists seeded successfully!");
     process.exit(0);
@@ -91,3 +91,7 @@ const seedArtists = async () => {
 };
 
 seedArtists();
+
+
+
+

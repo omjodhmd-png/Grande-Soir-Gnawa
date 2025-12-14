@@ -1,15 +1,17 @@
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { instance } from "../instance"
 
-export default function usecreatbooking() {
-  return useMutation({
-    mutationFn: async ({ name, email, type }) => {
-      const res = await instance.post("/booking", {
-        name,
-        email,
-        type,
-      });
-      return res.data;
+
+
+
+
+export function useGetBookings() {
+  return useQuery({
+    queryKey: ["booking"], 
+    queryFn: async () => {
+      const res = await instance.get("/booking");
+      return res.data; 
     },
   });
 }
+

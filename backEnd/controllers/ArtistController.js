@@ -3,10 +3,6 @@ import Artist from '../models/Artist.js';
 
 
 
-
-
-
-
 export const getAllArtist = async (req ,res)=>{
     try {
         const artist = await Artist.findAll();
@@ -27,4 +23,7 @@ export const getArtist=async (req,res)=>{
         res.status(500).json({error:error.message})
     }
 }
+
+
+
 

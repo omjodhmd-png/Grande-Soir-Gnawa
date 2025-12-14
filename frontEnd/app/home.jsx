@@ -19,18 +19,18 @@ const { width, height } = Dimensions.get("window");
 export default function ArtistScreen() {
 
 
-    const { data, isLoading, error } = useGetArtists()
-    if (isLoading)
-      return (
-  
-        <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-          <Text>Loading...</Text>
-        </View>)
-    if (error)
-      return (
-        <View >
-          <Text>Error loding event </Text>
-        </View>)
+  const { data, isLoading, error } = useGetArtists()
+  if (isLoading)
+    return (
+
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Loading...</Text>
+      </View>)
+  if (error)
+    return (
+      <View >
+        <Text>Error loding event </Text>
+      </View>)
 
 
 
@@ -38,42 +38,47 @@ export default function ArtistScreen() {
   return (
     <View style={styles.container}>
 
-      {/* HEADER */}
       <View style={styles.header}>
-      <TouchableOpacity style={{padding:10}} onPress={()=>router.back("./index")}>
-        <Ionicons name="arrow-back" size={26} color="white" />
-        </TouchableOpacity>        
-        <Text style={styles.headerTitle}>Artist Gnawa</Text>
-        <TouchableOpacity style={{padding:10}} onPress={()=>router.push("./ticket")}>
-        <Ionicons name="ticket" size={26} color="white" />
+        <TouchableOpacity style={{ padding: 10 }} onPress={() => router.back("./index")}>
+          <Ionicons name="arrow-back" size={26} color="white" />
         </TouchableOpacity>
-        
+        <Text style={styles.headerTitle}>Artist Gnawa</Text>
+        <TouchableOpacity style={{ padding: 10 }} onPress={() => router.push("myticket")}>
+          <Ionicons name="ticket" size={26} color="white" />
+        </TouchableOpacity>
+
 
 
       </View>
 
-     
 
-      {/* ARTIST LIST */}
+
       <FlatList
         data={data}
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ paddingBottom: 20 }}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.card} 
-             onPress={() =>router.push({
+
+          
+          <TouchableOpacity style={styles.card}
+            onPress={() => router.push({
               pathname: "/artists/[id]",
               params: { id: item.id },
             })}>
             <View >
-            <Image source={{uri: item.image_url}} style={styles.avatar} />
+              <Image source={{ uri: item.image_url }} style={styles.avatar} />
             </View>
             <View>
               <Text style={styles.artistName}>{item.name}</Text>
               <Text style={styles.artistDesc}>{item.speciality}</Text>
+              <View style={{  flexDirection:"row",justifyContent:"space-between",width:"85%"}} >
+                <Text style={styles.artistsvip}>VIP: {item.price_vip}DH</Text>
+                <Text style={styles.artistsvip}>STANDAR: {item.price_standard}DH</Text>
+              </View>
             </View>
-          
-        </TouchableOpacity>
+
+
+          </TouchableOpacity>
         )}
       />
     </View>
@@ -146,4 +151,8 @@ const styles = StyleSheet.create({
     color: "#ddd",
     fontSize: 13,
   },
+  artistsvip:{
+    color:"#E54607",
+    fontWeight:"bold"
+  }
 });

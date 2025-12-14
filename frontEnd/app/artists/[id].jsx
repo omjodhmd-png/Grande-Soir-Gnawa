@@ -6,7 +6,10 @@ import { useGetArtist } from "../../services/artists/queries";
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function ArtistDetails() {
+  
   const { id } = useLocalSearchParams();
+
+
   const { data, isLoading, error } = useGetArtist(id);
   if (isLoading)
     return (
@@ -22,10 +25,10 @@ export default function ArtistDetails() {
       </View>
     );
 
+
   return (
     <ScrollView style={styles.container}>
 
-      {/* HEADER */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={26} color="white" />
@@ -42,27 +45,28 @@ export default function ArtistDetails() {
           />
       </ImageBackground>
      
-        {/* NAME */}
         <View style={{ padding: 15 }}>
           <Text style={styles.name}>{data.name}</Text>
           <Text style={styles.speciality}>{data.speciality}</Text>
         </View>
         
-        {/* BIO */}
         <View style={{ paddingHorizontal: 15 }}>
           <Text style={styles.bioTitle}>Biographie</Text>
           <Text style={styles.bio}>{data.bio}</Text>
         </View>
 
      
-      {/* DAY */}
       <View style={styles.footer}>
         <View style={styles.dayBox}>
           <Ionicons name="calendar" size={22} color="white" />
           <Text style={styles.dayText}>Jour de passage : {data.performance_time} PM</Text>
         </View>
 
-        <TouchableOpacity style={styles.reserveBtn} onPress={()=>router.push("../resirvation")}>
+        <TouchableOpacity style={styles.reserveBtn} onPress={()=>router.push({
+          pathname:"../resirvation",
+          params:{id:id}
+          
+          })}>
           <Text style={styles.reserveTxt}>Reserve</Text>
 
         </TouchableOpacity>
